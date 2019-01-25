@@ -1,6 +1,8 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  # 注意這幾個 before_action 的順序
+  before_action :authenticate_user! # 設定 devise 時加入的
+  before_action :switch_tenant # 新加入
+  before_action :set_article, only: [:show, :edit, :update, :destroy] # scaffold 產生的
 
   # GET /articles
   # GET /articles.json
@@ -71,5 +73,10 @@ class ArticlesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
       params.require(:article).permit(:title, :content)
+    end
+
+    # 這個 before_action 將會根據當前的使用者切換至該使用者的 schema
+    def switch_tenant
+      Apartment::Tenant.switch! current_user.tenant_name
     end
 end

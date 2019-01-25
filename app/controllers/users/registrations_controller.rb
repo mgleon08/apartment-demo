@@ -10,9 +10,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super do |user|
+      # 這個 block 將在使用者被建立後執行，因此我們可以從這裡取出 tenant_name 來建立 schema
+      Apartment::Tenant.create(user.tenant_name)
+    end
+  end
 
   # GET /resource/edit
   # def edit

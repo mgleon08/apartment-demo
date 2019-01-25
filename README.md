@@ -1,24 +1,17 @@
-# README
+# Apartment Demo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+# Run postgres
 
-* Ruby version
+```ruby
+docker run -e POSTGRES_DB=apartment-demo_development -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres:11.1
+```
 
-* System dependencies
 
-* Configuration
+# Rails
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```ruby
+rake db:create
+rake db:migrate
+rails s
+```
